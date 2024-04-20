@@ -8,8 +8,8 @@ const handler = NextAuth({
             clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
             authorizationUrl: "https://accounts.spotify.com/authorize",
             profileUrl: "https://api.spotify.com/v1/me",
-            scopes: ["user-read-email", "user-read-private"],
             protection: "pkce",
+            authorization: {params: {scope: "user-read-email user-read-private user-follow-read user-library-read playlist-read-private user-top-read"}},
         }),
     ],
     callbacks: {
