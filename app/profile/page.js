@@ -15,6 +15,7 @@ const ProfilePage = () => {
             } 
         }
         getUserInfo();
+        
     }, []);
     
     if (!userData) {

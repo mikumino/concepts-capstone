@@ -9,13 +9,14 @@ const handler = NextAuth({
             authorizationUrl: "https://accounts.spotify.com/authorize",
             profileUrl: "https://api.spotify.com/v1/me",
             scopes: ["user-read-email", "user-read-private"],
+            protection: "pkce",
         }),
     ],
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
                 token.id = account.id;
-                token.accessToken = account.accessToken;
+                token.accessToken = account.access_token;
             }
             return token;
         },
