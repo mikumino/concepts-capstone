@@ -11,16 +11,16 @@ const ProfilePage = () => {
             const session = await getSession();
             if (session) {
                 setUserData(session.user);
-                console.log(session.user);
+                console.log(session);
             } 
         }
         getUserInfo();
     }, []);
-
+    
     if (!userData) {
-        return <div>Loading...</div>;
+        return <div><span className="loading loading-dots text-primary"></span></div>;
     }
-
+    
     const { email, name, picture } = userData;
 
     return (
