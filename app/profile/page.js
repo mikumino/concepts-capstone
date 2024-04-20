@@ -7,6 +7,7 @@
 
 import { getSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import ArtistRow from "../components/ArtistRow";
 
 const ProfilePage = () => {
     const [userData, setUserData] = useState(null);
@@ -65,7 +66,7 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="max-w-5xl my-8 mx-auto">
+        <div className="max-w-3xl my-8 mx-auto">
             <div className="flex flex-row justify-center items-center">
                 <img className="rounded-full w-40 mr-6" src={me.images[1].url} alt={me.display_name} />
                 <h1 className="text-4xl font-bold">{me.display_name}</h1>
@@ -76,10 +77,7 @@ const ProfilePage = () => {
                     {
                         topArtists.map((artist) => {
                             return (
-                                <div key={artist.id}>
-                                    <p>{artist.name}</p>
-                                    <img src={artist.images[0].url} alt={artist.name} />
-                                </div>
+                                <ArtistRow index={topArtists.indexOf(artist)} artist={artist} key={artist.id} />
                             )
                         })
                     }
