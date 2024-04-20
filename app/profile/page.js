@@ -62,7 +62,22 @@ const ProfilePage = () => {
     }, []);
     
     if (!me) {
-        return <div><span className="loading loading-dots text-primary"></span></div>;
+        return (
+            <div className="max-w-3xl my-8 mx-auto">
+                <div className="flex flex-row justify-center items-center">
+                    <div className="skeleton w-40 h-40 rounded-full mr-6"></div>
+                    <div className="skeleton w-40 h-8"></div>
+                </div>
+                <div className="mb-6">
+                    <div>
+                        <div className="skeleton w-40 h-8 mb-6"></div>
+                        <div className="skeleton w-full h-16 mb-4"></div>
+                        <div className="skeleton w-full h-16 mb-4"></div>
+                        <div className="skeleton w-full h-16 mb-4"></div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
