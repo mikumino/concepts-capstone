@@ -65,22 +65,27 @@ const ProfilePage = () => {
     }
 
     return (
-        <div>
-            <img src={me.images[0].url} alt={me.display_name} />
-            <h1>{me.display_name}</h1>
-            <p>Logged in with: {me.email}</p>
-            <h2 className="text-2xl font-bold">Top Artists</h2>
-            {
-                topArtists.map((artist) => {
-                    return (
-                        <div key={artist.id}>
-                            <p>{artist.name}</p>
-                            <img src={artist.images[0].url} alt={artist.name} />
-                        </div>
-                    )
-                })
-            }
-            <button onClick={handleLogout}>Logout</button>
+        <div className="max-w-5xl my-8 mx-auto">
+            <div className="flex flex-row justify-center items-center">
+                <img className="rounded-full w-40 mr-6" src={me.images[1].url} alt={me.display_name} />
+                <h1 className="text-4xl font-bold">{me.display_name}</h1>
+            </div>
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold">Top Artists</h2>
+                <div>
+                    {
+                        topArtists.map((artist) => {
+                            return (
+                                <div key={artist.id}>
+                                    <p>{artist.name}</p>
+                                    <img src={artist.images[0].url} alt={artist.name} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </div>
+            <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
         </div>
     )
 }
