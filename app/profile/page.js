@@ -7,6 +7,7 @@
 
 import { getSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { FaSpotify } from "react-icons/fa";
 import ArtistRow from "../components/ArtistRow";
 
 const ProfilePage = () => {
@@ -86,7 +87,14 @@ const ProfilePage = () => {
                 <img className="rounded-full w-40 mr-6" src={me.images[1].url} alt={me.display_name} />
                 <h1 className="text-4xl font-bold">{me.display_name}</h1>
             </div>
-            <div className="mb-6">
+            <div className="navbar border-b-2 border-[#423737] w-full">
+                <div className="flex-1">
+                    <a className="btn btn-ghost text-xl">Artists</a>
+                    <a className="btn btn-ghost text-xl">Songs</a>
+                    <a className="btn btn-ghost text-xl">Albums</a>
+                </div>
+            </div>
+            <div className="mb-6 pt-6">
                 <h2 className="text-2xl font-bold">Top Artists</h2>
                 <div>
                     {
