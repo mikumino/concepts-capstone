@@ -3,12 +3,12 @@
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getTopItems, getMe } from "@/app/lib/spotify";
-import ArtistRow from "@/app/components/ArtistRow";
+import SongRow from "@/app/components/SongRow";
 import Navbar from "@/app/components/Navbar";
 
 const ProfilePage = () => {
     const [me, setMe] = useState(null);
-    const [topArtists, setTopArtists] = useState([]);
+    const [topTracks, setTopTracks] = useState([]);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
@@ -16,7 +16,7 @@ const ProfilePage = () => {
     
     const fetchInfo = async () => {
         setMe(await getMe());
-        setTopArtists(await getTopItems('artists', 'long_term', 10, 0));
+        setTopTracks(await getTopItems('tracks', 'long_term', 10, 0));
     }
 
     useEffect(() => {
@@ -51,10 +51,10 @@ const ProfilePage = () => {
             </div>
             <Navbar/>
             <div className="mb-6 pt-4">
-                <h2 className="text-2xl font-bold">Top Artists</h2>
+                <h2 className="text-2xl font-bold">Top Tracks</h2>
                 <div>
-                    {topArtists.map((artist, index) => (
-                        <ArtistRow key={artist.id} artist={artist} index={index} />
+                    {topTracks.map((song, index) => (
+                        <SongRow key={song.id} song={song} index={index} />
                     ))}
                 </div>
             </div>
