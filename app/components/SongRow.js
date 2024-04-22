@@ -1,4 +1,4 @@
-const SongRow = ({song, album, index}) => {
+const SongRow = ({song, index}) => {
     return (
         <div className="flex flex-row items-center justify-between p-4">
             <div className="flex flex-row items-center">
