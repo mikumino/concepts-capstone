@@ -1,64 +1,25 @@
 'use client';
 
-// this whole thing needs refactoring but i'm just trying to get
-// the data to show up for now (it does now!)
-// i'll get to styling and refactoring later
-// -alan
-
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { getTopItems, getMe } from "../lib/spotify";
 import ArtistRow from "../components/ArtistRow";
 
 const ProfilePage = () => {
-    const [userData, setUserData] = useState(null);
     const [me, setMe] = useState(null);
     const [topArtists, setTopArtists] = useState([]);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
     }
-
-    async function getTopTracks() {
-        const session = await getSession();
-        if (session) {
-            const response = await fetch("https://api.spotify.com/v1/me/top/artists?time_range=long_term", {
-                headers: {
-                    Authorization: `Bearer ${session.user.accessToken}`
-                }
-            });
-            const data = await response.json();
-            setTopArtists(data.items);
-        }
-    }
-
-    async function getMe() {
-        const session = await getSession();
-        if (session) {
-            const response = await fetch("https://api.spotify.com/v1/me", {
-                headers: {
-                    Authorization: `Bearer ${session.user.accessToken}`
-                }
-            });
-            const data = await response.json();
-            console.log(data);
-            setMe(data);
-        }
     
+    const fetchInfo = async () => {
+        setMe(await getMe());
+        setTopArtists(await getTopItems('artists', 'long_term', 10, 0));
     }
 
     useEffect(() => {
-        async function getUserInfo() {
-            const session = await getSession();
-            if (session) {
-                setUserData(session.user);
-                console.log(session);
-            } 
-        }
-        getUserInfo();
-
-        getMe();
-        getTopTracks();
-        
+        fetchInfo();        
     }, []);
     
     if (!me) {
@@ -89,13 +50,9 @@ const ProfilePage = () => {
             <div className="mb-6">
                 <h2 className="text-2xl font-bold">Top Artists</h2>
                 <div>
-                    {
-                        topArtists.map((artist) => {
-                            return (
-                                <ArtistRow index={topArtists.indexOf(artist)} artist={artist} key={artist.id} />
-                            )
-                        })
-                    }
+                    {topArtists.map((artist, index) => (
+                        <ArtistRow key={artist.id} artist={artist} index={index} />
+                    ))}
                 </div>
             </div>
             <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
