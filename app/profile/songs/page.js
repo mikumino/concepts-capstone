@@ -2,9 +2,9 @@
 
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getTopItems, getMe } from "../lib/spotify";
-import ArtistRow from "../components/ArtistRow";
-import Navbar from "../components/Navbar";
+import { getTopItems, getMe } from "@/app/lib/spotify";
+import ArtistRow from "@/app/components/ArtistRow";
+import Navbar from "@/app/components/Navbar";
 
 const ProfilePage = () => {
     const [me, setMe] = useState(null);
@@ -30,7 +30,8 @@ const ProfilePage = () => {
                     <div className="skeleton w-40 h-40 rounded-full mr-6"></div>
                     <div className="skeleton w-40 h-8"></div>
                 </div>
-                <div className="mb-6">
+                <Navbar/>
+                <div className="mb-6 pt-4">
                     <div>
                         <div className="skeleton w-40 h-8 mb-6"></div>
                         <div className="skeleton w-full h-16 mb-4"></div>
