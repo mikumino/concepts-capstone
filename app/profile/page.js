@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar";
 const ProfilePage = () => {
     const [me, setMe] = useState(null);
     const [topArtists, setTopArtists] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
@@ -17,13 +18,14 @@ const ProfilePage = () => {
     const fetchInfo = async () => {
         setMe(await getMe());
         setTopArtists(await getTopItems('artists', 'long_term', 10, 0));
+        setLoading(false);
     }
 
     useEffect(() => {
         fetchInfo();        
     }, []);
     
-    if (!me) {
+    if (loading) {
         return (
             <div className="max-w-3xl my-8 mx-auto">
                 <div className="flex flex-row justify-center items-center">

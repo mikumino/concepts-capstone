@@ -1,4 +1,5 @@
 const SongRow = ({song, index}) => {
+    if (!song) return null;
     return (
         <div className="flex flex-row items-center justify-between p-4">
             <div className="flex flex-row items-center">

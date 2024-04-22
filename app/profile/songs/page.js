@@ -9,21 +9,24 @@ import Navbar from "@/app/components/Navbar";
 const SongPage = () => {
     const [me, setMe] = useState(null);
     const [topTracks, setTopTracks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
     }
     
-    const fetchInfo = async () => {
-        setMe(await getMe());
-        setTopTracks(await getTopItems('tracks', 'long_term', 10, 0));
-    }
-
+    
     useEffect(() => {
-        fetchInfo();        
+        const fetchInfo = async () => {
+            setMe(await getMe());
+            const topTracks = await getTopItems('tracks', 'long_term', 10, 0);
+            setTopTracks(topTracks);
+            setLoading(false);
+        }
+        fetchInfo();  
     }, []);
     
-    if (!me) {
+    if (loading) {
         return (
             <div className="max-w-3xl my-8 mx-auto">
                 <div className="flex flex-row justify-center items-center">
@@ -53,8 +56,9 @@ const SongPage = () => {
             <div className="mb-6 pt-4">
                 <h2 className="text-2xl font-bold">Top Songs</h2>
                 <div>
+                    {console.log(topTracks)}
                     {topTracks.map((song, index) => (
-                        <SongRow key={song.id} name={song} index={index} />
+                        <SongRow key={song.id} song={song} index={index} />
                     ))}
                 </div>
             </div>
