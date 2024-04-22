@@ -6,7 +6,7 @@ import { getTopItems, getMe } from "@/app/lib/spotify";
 import SongRow from "@/app/components/SongRow";
 import Navbar from "@/app/components/Navbar";
 
-const ProfilePage = () => {
+const SongPage = () => {
     const [me, setMe] = useState(null);
     const [topTracks, setTopTracks] = useState([]);
 
@@ -51,10 +51,10 @@ const ProfilePage = () => {
             </div>
             <Navbar/>
             <div className="mb-6 pt-4">
-                <h2 className="text-2xl font-bold">Top Tracks</h2>
+                <h2 className="text-2xl font-bold">Top Songs</h2>
                 <div>
                     {topTracks.map((song, index) => (
-                        <SongRow key={song.id} song={song} index={index} />
+                        <SongRow key={song.id} name={song} index={index} />
                     ))}
                 </div>
             </div>
@@ -63,4 +63,4 @@ const ProfilePage = () => {
     )
 }
 
-export default ProfilePage;
+export default SongPage;
