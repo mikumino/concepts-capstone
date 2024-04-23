@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getTopItems, getMe } from "@/app/lib/spotify";
 import SongRow from "@/app/components/SongRow";
 import { motion } from "framer-motion";
+import ListSkeleton from "@/app/components/ListSkeleton";
 
 const SongPage = () => {
     const variants = {
@@ -35,15 +36,8 @@ const SongPage = () => {
     
     if (loading) {
         return (
-            <div className="max-w-3xl my-8 mx-auto">
-                <div className="mb-6">
-                    <div>
-                        <div className="skeleton w-40 h-8 mb-6"></div>
-                        <div className="skeleton w-full h-16 mb-4"></div>
-                        <div className="skeleton w-full h-16 mb-4"></div>
-                        <div className="skeleton w-full h-16 mb-4"></div>
-                    </div>
-                </div>
+            <div className="max-w-3xl mx-auto">
+                <ListSkeleton />
             </div>
         )
     }
