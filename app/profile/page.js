@@ -28,10 +28,6 @@ const ProfilePage = () => {
     if (loading) {
         return (
             <div className="max-w-3xl my-8 mx-auto">
-                <div className="flex flex-row justify-center items-center">
-                    <div className="skeleton w-40 h-40 rounded-full mr-6"></div>
-                    <div className="skeleton w-40 h-8"></div>
-                </div>
                 <div className="mb-6">
                     <div>
                         <div className="skeleton w-40 h-8 mb-6"></div>
@@ -45,22 +41,16 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="max-w-3xl my-8 mx-auto">
-            <div className="flex flex-row justify-center items-center">
-                <img className="rounded-full w-40 mr-6" src={me.images[1].url} alt={me.display_name} />
-                <h1 className="text-4xl font-bold">{me.display_name}</h1>
+        <>
+            <h2 className="text-2xl font-bold">Top Artists</h2>
+            <div>
+                {topArtists.map((artist, index) => (
+                    <ArtistRow key={artist.id} artist={artist} index={index} />
+                ))}
             </div>
-            <Navbar/>
-            <div className="mb-6 pt-4">
-                <h2 className="text-2xl font-bold">Top Artists</h2>
-                <div>
-                    {topArtists.map((artist, index) => (
-                        <ArtistRow key={artist.id} artist={artist} index={index} />
-                    ))}
-                </div>
-            </div>
-            <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
-        </div>
+
+             <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
+        </>
     )
 }
 
