@@ -18,6 +18,7 @@ module.exports = {
                 "primary": "#1DB954",
                 "secondary": "#2174d4",
                 "base-100": "191414",
+                "base-300": "141010",
                 "base-content": "f6f4f4",
             }
         }
