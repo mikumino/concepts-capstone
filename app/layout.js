@@ -10,7 +10,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    // overflow-y-scroll keeps scrollbar visible, prevents layout shift
+    // hacky but eh
+    <html lang="en" className="overflow-y-scroll">
       <body className={inter.className}>{children}</body>
     </html>
   );
