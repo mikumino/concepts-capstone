@@ -4,9 +4,16 @@ import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getTopItems, getMe } from "@/app/lib/spotify";
 import SongRow from "@/app/components/SongRow";
-import Navbar from "@/app/components/Navbar";
+import { motion } from "framer-motion";
 
 const SongPage = () => {
+    const variants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0},
+        hiddenLeft: { opacity: 0, x: -20 },
+        visibleLeft: { opacity: 1, x: 0},
+    };
+
     const [me, setMe] = useState(null);
     const [topTracks, setTopTracks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -43,13 +50,13 @@ const SongPage = () => {
 
     return (
         <>
-            <h2 className="text-2xl font-bold">Top Songs</h2>
-            <div>
+            <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Songs</motion.h2>
+            <motion.div  initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
                 {console.log(topTracks)}
                 {topTracks.map((song, index) => (
                     <SongRow key={song.id} song={song} index={index} />
                 ))}
-            </div>
+            </motion.div>
             <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
         </>
     )
