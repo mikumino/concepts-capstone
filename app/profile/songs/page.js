@@ -19,7 +19,8 @@ const SongPage = () => {
     const [me, setMe] = useState(null);
     const [topTracks, setTopTracks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [timeRange, setTimeRange] = useState('long_term')
+    const [timeRange, setTimeRange] = useState('long_term');
+    const [loadingItems, setLoadingItems] = useState(null);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
@@ -31,6 +32,7 @@ const SongPage = () => {
             setMe(await getMe());
             const topTracks = await getTopItems('tracks', [timeRange], 10, 0);
             setTopTracks(topTracks);
+            setLoadingItems(!loadingItems);
             setLoading(false);
         }
         fetchInfo();  
@@ -56,7 +58,7 @@ const SongPage = () => {
                     </select>
                 </motion.h2>
             </div>
-            <motion.div  initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
+            <motion.div key={loadingItems} initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
                 {console.log(topTracks)}
                 {topTracks.map((song, index) => (
                     <SongRow key={song.id} song={song} index={index} />

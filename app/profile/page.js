@@ -20,6 +20,7 @@ const ProfilePage = () => {
     const [topArtists, setTopArtists] = useState([]);
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('long_term');
+    const [loadingItems, setLoadingItems] = useState(null);
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
@@ -30,6 +31,7 @@ const ProfilePage = () => {
             setMe(await getMe());
             const topArtists = await getTopItems('artists', [timeRange], 10, 0);
             setTopArtists(topArtists);
+            setLoadingItems(!loadingItems);
             setLoading(false);
         }
         fetchInfo();  
@@ -55,7 +57,7 @@ const ProfilePage = () => {
                     </select>
                 </motion.h2>
             </div>
-            <motion.div initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
+            <motion.div key={loadingItems} initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
                 {topArtists.map((artist, index) => (
                     <ArtistRow key={artist.id} artist={artist} index={index} />
                 ))}
