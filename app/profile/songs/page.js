@@ -44,7 +44,16 @@ const SongPage = () => {
 
     return (
         <>
-            <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Songs</motion.h2>
+            <div className="flex flex-row space-x-[489px]">
+                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Songs</motion.h2>
+                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">
+                    <select className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
+                        <option>Last 30 days</option>
+                        <option>Last 180 days</option>
+                        <option selected>Last 365 days</option>
+                    </select>
+                </motion.h2>
+            </div>
             <motion.div  initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
                 {console.log(topTracks)}
                 {topTracks.map((song, index) => (

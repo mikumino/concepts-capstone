@@ -2,12 +2,12 @@
 
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getTopItems, getMe } from "../lib/spotify";
-import ArtistRow from "../components/ArtistRow";
+import { getTopItems, getMe } from "@/app/lib/spotify";
+import ArtistRow from "@/app/components/ArtistRow";
 import { motion } from "framer-motion";
-import ListSkeleton from "../components/ListSkeleton";
+import ListSkeleton from "@/app/components/ListSkeleton";
 
-const ProfilePage = () => {
+const ArtistPage = () => {
     const variants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0},
@@ -64,4 +64,4 @@ const ProfilePage = () => {
     )
 }
 
-export default ProfilePage;
+export default ArtistPage;
