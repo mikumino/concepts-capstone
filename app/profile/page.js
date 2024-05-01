@@ -6,6 +6,7 @@ import { getTopItems, getMe } from "../lib/spotify";
 import ArtistRow from "../components/ArtistRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "../components/ListSkeleton";
+import TimeRangeSelect from "../components/TimeRangeSelect";
 
 const ProfilePage = () => {
     const variants = {
@@ -18,20 +19,21 @@ const ProfilePage = () => {
     const [me, setMe] = useState(null);
     const [topArtists, setTopArtists] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [timeRange, setTimeRange] = useState('long_term');
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
     }
     
-    const fetchInfo = async () => {
-        setMe(await getMe());
-        setTopArtists(await getTopItems('artists', 'long_term', 10, 0));
-        setLoading(false);
-    }
-
     useEffect(() => {
-        fetchInfo();        
-    }, []);
+        const fetchInfo = async () => {
+            setMe(await getMe());
+            const topArtists = await getTopItems('artists', [timeRange], 10, 0);
+            setTopArtists(topArtists);
+            setLoading(false);
+        }
+        fetchInfo();  
+    }, [timeRange]);
     
     if (loading) {
         return (
@@ -46,10 +48,10 @@ const ProfilePage = () => {
             <div className="flex flex-row space-x-[483px]">
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Artists</motion.h2>
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">
-                    <select className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
-                        <option>Last 30 days</option>
-                        <option>Last 180 days</option>
-                        <option selected>Last 365 days</option>
+                    <select defaultValue="long_term" onChange={e => setTimeRange(e.target.value)} className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
+                        <option value="short_term" >Last 30 days</option>
+                        <option value="medium_term" >Last 180 days</option>
+                        <option value="long_term" >Last 365 days</option>
                     </select>
                 </motion.h2>
             </div>

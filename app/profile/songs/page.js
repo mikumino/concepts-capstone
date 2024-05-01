@@ -6,6 +6,7 @@ import { getTopItems, getMe } from "@/app/lib/spotify";
 import SongRow from "@/app/components/SongRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "@/app/components/ListSkeleton";
+import TimeRangeSelect from "@/app/components/TimeRangeSelect";
 
 const SongPage = () => {
     const variants = {
@@ -18,6 +19,7 @@ const SongPage = () => {
     const [me, setMe] = useState(null);
     const [topTracks, setTopTracks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [timeRange, setTimeRange] = useState('long_term')
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
@@ -27,12 +29,12 @@ const SongPage = () => {
     useEffect(() => {
         const fetchInfo = async () => {
             setMe(await getMe());
-            const topTracks = await getTopItems('tracks', 'long_term', 10, 0);
+            const topTracks = await getTopItems('tracks', [timeRange], 10, 0);
             setTopTracks(topTracks);
             setLoading(false);
         }
         fetchInfo();  
-    }, []);
+    }, [timeRange]);
     
     if (loading) {
         return (
@@ -47,10 +49,10 @@ const SongPage = () => {
             <div className="flex flex-row space-x-[489px]">
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Songs</motion.h2>
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">
-                    <select className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
-                        <option>Last 30 days</option>
-                        <option>Last 180 days</option>
-                        <option selected>Last 365 days</option>
+                    <select defaultValue="long_term" onChange={e => setTimeRange(e.target.value)} className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
+                        <option value="short_term" >Last 30 days</option>
+                        <option value="medium_term" >Last 180 days</option>
+                        <option value="long_term" >Last 365 days</option>
                     </select>
                 </motion.h2>
             </div>
