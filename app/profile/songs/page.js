@@ -6,7 +6,6 @@ import { getTopItems, getMe } from "@/app/lib/spotify";
 import SongRow from "@/app/components/SongRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "@/app/components/ListSkeleton";
-import TimeRangeSelect from "@/app/components/TimeRangeSelect";
 
 const SongPage = () => {
     const variants = {

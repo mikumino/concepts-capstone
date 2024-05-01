@@ -6,7 +6,6 @@ import { getTopItems, getMe } from "../lib/spotify";
 import ArtistRow from "../components/ArtistRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "../components/ListSkeleton";
-import TimeRangeSelect from "../components/TimeRangeSelect";
 
 const ProfilePage = () => {
     const variants = {
