@@ -36,7 +36,7 @@ const ProfilePage = () => {
             setBasicGenres(basicGenres);
             setLoadingItems(!loadingItems);
             setLoading(false);
-            //console.log(basicGenres)
+            console.log(basicGenres)
         }
         fetchInfo();  
     }, [timeRange]);
@@ -50,8 +50,8 @@ const ProfilePage = () => {
     }
     return (
         <>
-            <div className="flex flex-row space-x-[483px]">
-                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Artists</motion.h2>
+            <div className="flex flex-row space-x-[479px]">
+                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Genres</motion.h2>
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">
                     <select defaultValue="long_term" onChange={e => setTimeRange(e.target.value)} className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
                         <option value="short_term" >Last 30 days</option>

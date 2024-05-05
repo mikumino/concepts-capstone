@@ -1,17 +1,18 @@
-import { Chart as ChartJS, ArcElement, Tooltip} from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { getBasicGenres } from '../lib/spotify';
 
-const GenreDoughnut = ({artists}) => {
+const GenreDoughnut = ({artists, genres}) => {
 
   const artistGenres = {}
 
   function addGenres(artistGenres, genreName){
-    if (artistGenres.hasOwnProperty(genreName)){
-      artistGenres[genreName]++
-    }
-    else {
-      artistGenres[genreName] = 1
+    if (genres.genres.some(substring => genreName.includes(substring))){
+      if (artistGenres.hasOwnProperty(genreName)){
+        artistGenres[genreName]++
+      }
+      else {
+        artistGenres[genreName] = 1
+      }
     }
   }
   artists.map(function(artist) {
@@ -19,14 +20,23 @@ const GenreDoughnut = ({artists}) => {
       addGenres(artistGenres, artist.genres[x])
     }
   })
-  console.log(artistGenres)
+  
+  const sortedCounts = Object.keys(artistGenres).sort((a, b) => artistGenres[b] - artistGenres[a]);
+  const sortedGenres = sortedCounts.reduce((sorted, key) => {
+    sorted[key] = artistGenres[key];
+    return sorted;
+  }, {});
+  
+  console.log(Object.values(sortedGenres).slice(0, 10));
+  console.log(Object.keys(sortedGenres).slice(0, 10));
+
   ChartJS.register(ArcElement, Tooltip)
   const data = {
-      labels: Object.keys(artistGenres),
+      labels: Object.keys(sortedGenres).slice(0, 10),
       datasets: [
         {
           label: 'Artists w/ Genre: ',
-          data: Object.values(artistGenres),
+          data: Object.values(sortedGenres).slice(0, 10),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
