@@ -2,7 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getTopItems, getMe } from "../lib/spotify";
+import { getTopItems, getMe, getBasicGenres } from "../lib/spotify";
 import ArtistRow from "../components/ArtistRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "../components/ListSkeleton";
@@ -18,6 +18,7 @@ const ProfilePage = () => {
 
     const [me, setMe] = useState(null);
     const [topArtists, setTopArtists] = useState([]);
+    const [basicGenres, setBasicGenres] = useState([]);
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('long_term');
     const [loadingItems, setLoadingItems] = useState(null);
@@ -30,9 +31,12 @@ const ProfilePage = () => {
         const fetchInfo = async () => {
             setMe(await getMe());
             const topArtists = await getTopItems('artists', [timeRange], 10, 0);
+            const basicGenres = await getBasicGenres();
             setTopArtists(topArtists);
+            setBasicGenres(basicGenres);
             setLoadingItems(!loadingItems);
             setLoading(false);
+            //console.log(basicGenres)
         }
         fetchInfo();  
     }, [timeRange]);
@@ -44,7 +48,6 @@ const ProfilePage = () => {
             </div>
         )
     }
-
     return (
         <>
             <div className="flex flex-row space-x-[483px]">
@@ -58,11 +61,10 @@ const ProfilePage = () => {
                 </motion.h2>
             </div>
             <motion.div key={loadingItems} initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
-                <GenreDoughnut artists={topArtists}/>
+                <GenreDoughnut artists={topArtists} genres={basicGenres}/>
             </motion.div>
             <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
         </>
     )
 }
-
 export default ProfilePage;
