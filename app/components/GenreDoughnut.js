@@ -1,22 +1,17 @@
 import { Chart as ChartJS, ArcElement, Tooltip} from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { getBasicGenres } from '../lib/spotify';
 
 const GenreDoughnut = ({artists}) => {
 
-  const artistGenres = {
-    names: {
-      name: {},
-      count: {}
-    }
-  }
+  const artistGenres = {}
 
   function addGenres(artistGenres, genreName){
     if (artistGenres.hasOwnProperty(genreName)){
-      artistGenres.names.name = genreName
-      artistGenres.names[genreName].count++
+      artistGenres[genreName]++
     }
     else {
-      // artistGenres.names[genreName].count = 1;
+      artistGenres[genreName] = 1
     }
   }
   artists.map(function(artist) {
@@ -25,15 +20,13 @@ const GenreDoughnut = ({artists}) => {
     }
   })
   console.log(artistGenres)
-  // console.log(artistGenres)
-  // console.log(artistGenres[5][2])
   ChartJS.register(ArcElement, Tooltip)
   const data = {
-      labels: artistGenres,
+      labels: Object.keys(artistGenres),
       datasets: [
         {
           label: 'Artists w/ Genre: ',
-          data: [12, 19, 3, 5, 2, 3, ],
+          data: Object.values(artistGenres),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
