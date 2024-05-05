@@ -6,6 +6,7 @@ import { getTopItems, getMe } from "../lib/spotify";
 import ArtistRow from "../components/ArtistRow";
 import { motion } from "framer-motion";
 import ListSkeleton from "../components/ListSkeleton";
+import GenreDoughnut from "../components/GenreDoughnut";
 
 const ProfilePage = () => {
     const variants = {
@@ -57,12 +58,9 @@ const ProfilePage = () => {
                 </motion.h2>
             </div>
             <motion.div key={loadingItems} initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
-                {topArtists.map((artist, index) => (
-                    <ArtistRow key={artist.id} artist={artist} index={index} />
-                ))}
+                <GenreDoughnut artists={topArtists}/>
             </motion.div>
-
-             <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
+            <button className="btn btn-outline" onClick={handleLogout}>Log out</button>
         </>
     )
 }
