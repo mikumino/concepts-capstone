@@ -32,6 +32,8 @@ export async function getTopItems(type, time_range, limit, offset) {
 
 export async function getBasicGenres() {
     const data = await fetcher('https://api.spotify.com/v1/recommendations/available-genre-seeds');
+    return data;
+}
 export async function getRecs(id,genre,limit)
 {
     // const data = await fetcher('https://api.spotify.com/v1/recommendations?limit=1&seed_artists=1RyvyyTE3xzB2ZywiAwp0i%2C3TVXtAsR1Inumwj472S9r4%2C1URnnhqYAYcrqrcwql10ft%2C0xOeVMOz2fVg5BJY3N6akT&seed_genres=classical');
