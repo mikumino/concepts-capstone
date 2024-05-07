@@ -11,6 +11,7 @@ const TopItem = ({ item, index, type }) => {
                     <p className='text-lg font-bold'>{index + 1}.</p>
                     <p className='ml-4 text-lg font-bold group-hover:text-primary transition-colors'>{item.name}</p>
                 </div>
+                <p className='text-sm text-gray-400 mt-1'>{type == 'artist' ? '' : item.artists[0].name}</p>
             </div>
         </a>
     )
