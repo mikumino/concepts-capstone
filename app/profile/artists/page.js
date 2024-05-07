@@ -57,7 +57,7 @@ const ArtistPage = () => {
                 </motion.h2>
             </div>
             <motion.div key={loadingItems} initial="hidden" animate="visible" variants={variants} transition={{duration: 0.25}}>
-            {topArtists.map((artist, index) => (
+                {topArtists.map((artist, index) => (
                     <ArtistRow key={artist.id} artist={artist} index={index} />
                 ))}
             </motion.div>

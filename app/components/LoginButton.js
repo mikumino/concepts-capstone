@@ -7,7 +7,7 @@ import { FaSpotify } from "react-icons/fa";
 
 const LoginButton = () => {
     const handleLogin = async () => {
-        await signIn("spotify", { callbackUrl: `${window.location.origin}/profile` } );
+        await signIn("spotify", { callbackUrl: `${window.location.origin}/profile/overview` });
     }
 
     return (
