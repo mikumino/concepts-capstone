@@ -8,7 +8,7 @@ const SongRow = ({song, index}) => {
                     <img className="rounded-lg w-48 h-48 ml-4" src={song.album.images[0].url} alt={song.name} />
                 </div>
                 <div className="flex flex-col text-right">
-                    <p className="ml-4 max-w-sm">{song.name}</p>
+                    <p className="ml-4 font-bold max-w-sm">{song.name}</p>
                     <p className="ml-4 text-gray-400">{song.artists[0].name}</p>
                 </div>
             </div>

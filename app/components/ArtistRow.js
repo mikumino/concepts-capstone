@@ -6,7 +6,7 @@ const ArtistRow = ({artist, index}) => {
                     <p className="text-lg font-bold">{index + 1}</p>
                     <img className="rounded-lg w-48 h-48 ml-4" src={artist.images[0].url} alt={artist.name} />
                 </div>
-                <p className="ml-4">{artist.name}</p>
+                <p className="ml-4 font-bold">{artist.name}</p>
             </div>
         </a>
     )
