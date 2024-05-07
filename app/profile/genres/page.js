@@ -2,13 +2,12 @@
 
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getTopItems, getMe, getBasicGenres } from "../lib/spotify";
-import ArtistRow from "../components/ArtistRow";
+import { getTopItems, getMe, getBasicGenres } from "@/app/lib/spotify";
 import { motion } from "framer-motion";
-import ListSkeleton from "../components/ListSkeleton";
-import GenreDoughnut from "../components/GenreDoughnut";
+import ListSkeleton from "@/app/components/ListSkeleton";
+import GenreDoughnut from "@/app/components/GenreDoughnut";
 
-const ProfilePage = () => {
+const GenrePage = () => {
     const variants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0},
@@ -30,8 +29,8 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchInfo = async () => {
             setMe(await getMe());
-            const topArtists = await getTopItems('artists', [timeRange], 10, 0);
-            const basicGenres = await getBasicGenres();
+            const topArtists = await getTopItems('artists', [timeRange], 50, 0);
+            // const basicGenres = await getBasicGenres();
             setTopArtists(topArtists);
             setBasicGenres(basicGenres);
             setLoadingItems(!loadingItems);
@@ -50,7 +49,7 @@ const ProfilePage = () => {
     }
     return (
         <>
-            <div className="flex flex-row space-x-[479px]">
+            <div className="flex flex-row space-x-[478px]">
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">Top Genres</motion.h2>
                 <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{duration: 0.25}} className="text-2xl font-bold">
                     <select defaultValue="long_term" onChange={e => setTimeRange(e.target.value)} className="select select-bordered border-b-2 border-[#423737] w-full max-w-sm">
@@ -67,4 +66,4 @@ const ProfilePage = () => {
         </>
     )
 }
-export default ProfilePage;
+export default GenrePage;

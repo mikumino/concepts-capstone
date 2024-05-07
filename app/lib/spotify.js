@@ -20,6 +20,11 @@ export async function getTopItems(type, time_range, limit, offset) {
     return data.items;
 }
 
+export async function getBasicGenres() {
+    const data = await fetcher('https://api.spotify.com/v1/recommendations/available-genre-seeds');
+    return data;
+}
+
 export async function getMe() {
     const data = await fetcher('https://api.spotify.com/v1/me');
     return data;

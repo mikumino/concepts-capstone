@@ -11,7 +11,7 @@ export default function Navbar() {
                 <AnimatedLink href="/profile/overview" active={usePathname() === '/profile/overview'}>Overview</AnimatedLink>
                 <AnimatedLink href="/profile/artists" active={usePathname() === '/profile/artists'}>Artists</AnimatedLink>
                 <AnimatedLink href="/profile/songs" active={usePathname() === '/profile/songs'}>Songs</AnimatedLink>
-                <AnimatedLink href="/profile/albums" active={usePathname() === '/profile/albums'}>Albums</AnimatedLink>
+                <AnimatedLink href="/profile/genres" active={usePathname() === '/profile/genres'}>Genres</AnimatedLink>
             </div>
         </div>
     )
