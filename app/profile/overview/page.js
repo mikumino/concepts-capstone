@@ -4,11 +4,11 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getTopItems, getMe } from "@/app/lib/spotify";
-import SongRow from "@/app/components/SongRow";
-import TopSongOrAlbum from "@/app/components/TopSongOrAlbum";
+import TopItem from "@/app/components/TopItem";
 import { motion } from "framer-motion";
 import ListSkeleton from "@/app/components/ListSkeleton";
-import css from "./overview.css";
+import Link from 'next/link';
+import ArtistRow from '@/app/components/ArtistRow';
 
 const Overview = () => {
     const variants = {
@@ -29,38 +29,6 @@ const Overview = () => {
 
     const handleLogout = async () => {
         await signOut({ callbackUrl: `${window.location.origin}` })
-    }
-
-    const incrementSongIndex = () => {
-        console.log(currentSongIndex)
-        if (currentSongIndex < 4) {
-            let incrementedVal = currentSongIndex + 1
-            setCurrentSongIndex(incrementedVal)
-        }
-    }
-
-    const decrementSongIndex = () => {
-        console.log(currentSongIndex)
-        if (currentSongIndex > 0) {
-            let decrementedVal = currentSongIndex - 1
-            setCurrentSongIndex(decrementedVal)
-        }
-    }
-
-    const incrementArtistIndex = () => {
-        console.log(currentSongIndex)
-        if (currentArtistIndex < 4) {
-            let incrementedVal = currentArtistIndex + 1
-            setCurrentArtistIndex(incrementedVal)
-        }
-    }
-
-    const decrementArtistIndex = () => {
-        console.log(currentSongIndex)
-        if (currentArtistIndex > 0) {
-            let decrementedVal = currentArtistIndex - 1
-            setCurrentArtistIndex(decrementedVal)
-        }
     }
 
     useEffect(() => {
@@ -85,24 +53,24 @@ const Overview = () => {
     }
 
     return (
-        <div className='overview-page'>
-            <div className="top-header">
-                <motion.h2 className="title text-2xl font-bold" initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{ duration: 0.25 }}>Top 5 Songs</motion.h2>
-            </div>
-            <div className="songs">
-                <ChevronLeftIcon className='arrows' onClick={decrementSongIndex} />
-                <TopSongOrAlbum topSongOrAlbum={topTracks[currentSongIndex]} index={currentSongIndex} isSong={true} />
-                <ChevronRightIcon className='arrows' onClick={incrementSongIndex} />
-            </div>
-            <div className="bottom-header">
-                <motion.h2 className="title text-2xl font-bold" initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{ duration: 0.25 }}>Top 5 Artists</motion.h2>
-            </div>
-            <div className="songs">
-                <ChevronLeftIcon className='arrows' onClick={decrementArtistIndex} />
-                <TopSongOrAlbum topSongOrAlbum={topArtists[currentArtistIndex]} index={currentArtistIndex} isSong={false} />
-                <ChevronRightIcon className='arrows' onClick={incrementArtistIndex} />
-            </div>
-            <button className="btn btn-outline logout" onClick={handleLogout}>Log out</button>
+        <div className='flex flex-col'>
+            <Link className='w-fit' href="/profile/artists">
+                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{ duration: 0.25 }} className="text-2xl font-bold hover:text-green-400 transition-colors w-fit mb-4">Top Artists</motion.h2>
+            </Link>
+            <motion.div key={loadingItems} initial="hidden" animate="visible" className='carousel gap-3 mb-12' variants={variants} transition={{ duration: 0.25 }}>
+                {topArtists.map((artist, index) => (
+                   <TopItem key={artist.id} item={artist} index={index} type='artist' />
+                ))}
+            </motion.div>
+            <Link className='w-fit' href="/profile/songs">
+                <motion.h2 initial="hiddenLeft" animate="visibleLeft" variants={variants} transition={{ duration: 0.25 }} className="text-2xl font-bold hover:text-green-400 transition-colors w-fit mb-4">Top Songs</motion.h2>
+            </Link>
+            <motion.div key={loadingItems} initial="hidden" animate="visible" className='carousel gap-3' variants={variants} transition={{ duration: 0.25 }}>
+                {topTracks.map((track, index) => (
+                    <TopItem key={track.id} item={track} index={index} type='track' />
+                ))}
+            </motion.div>
+            <button className="btn btn-outline mt-8 w-fit" onClick={handleLogout}>Log out</button>
         </div>
     )
 }
